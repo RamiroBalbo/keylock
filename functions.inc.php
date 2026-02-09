@@ -158,29 +158,27 @@ function keylock_get_config($engine)
         }
     }
 
-
-    //keylock hints [keylock-hints]
-    /*
-    $users = keylock_get_users();
-    if(is_array($users)) {
-        foreach ($users as $user)
-        {
-            $extension = $toggle . $user["extension"];
-            $hint = "SIP/" . $user["extension"] . "&" . "CUSTOM:KLC". $user["extension"];
-            $ext->add($ctx_hints, $extension, '', new ext_goto(1, $toggle, $ctx_toggle));
-            $ext->addHint($ctx_hints, $extension, $hint);
-        }
-    }
     
-    $ext->addInclude($ctx_keylock,$ctx_hints);
-    $ext->addInclude($ctx_keylock,$ctx_toggle);
-    $ext->addInclude($ctx_keylock,$ctx_lock);
-    $ext->addInclude($ctx_keylock,$ctx_unlock);
-    $ext->addInclude($ctx_keylock,$ctx_setpass);
-    $ext->addInclude('from-internal-additional',$ctx_keylock);
+    //keylock hints [keylock-hints]
+    /* BLOQUE COMENTADO
+                $users = keylock_get_users();
+                if(is_array($users)) {
+                    foreach ($users as $user) {
+                        $extension = $toggle . $user["extension"];
+                        $hint = "SIP/" . $user["extension"] . "&" . "CUSTOM:KLC". $user["extension"];
+                        $ext->add($ctx_hints, $extension, '', new ext_goto(1, $toggle, $ctx_toggle));
+                        $ext->addHint($ctx_hints, $extension, $hint);
+                    }
+                }
+                $ext->addInclude($ctx_keylock,$ctx_hints);
+                $ext->addInclude($ctx_keylock,$ctx_toggle);
+                $ext->addInclude($ctx_keylock,$ctx_lock);
+                $ext->addInclude($ctx_keylock,$ctx_unlock);
+                $ext->addInclude($ctx_keylock,$ctx_setpass);
+                $ext->addInclude('from-internal-additional',$ctx_keylock);
+                */
     break;
     }
-    */
 }
 
 function keylock_get_users()
