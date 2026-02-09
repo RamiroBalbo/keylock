@@ -160,6 +160,7 @@ function keylock_get_config($engine)
 
 
     //keylock hints [keylock-hints]
+    /*
     $users = keylock_get_users();
     if(is_array($users)) {
         foreach ($users as $user)
@@ -179,6 +180,7 @@ function keylock_get_config($engine)
     $ext->addInclude('from-internal-additional',$ctx_keylock);
     break;
     }
+    */
 }
 
 function keylock_get_users()
