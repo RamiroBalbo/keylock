@@ -169,14 +169,15 @@ function keylock_get_config($engine)
                         $ext->add($ctx_hints, $extension, '', new ext_goto(1, $toggle, $ctx_toggle));
                         $ext->addHint($ctx_hints, $extension, $hint);
                     }
-                }
-                $ext->addInclude($ctx_keylock,$ctx_hints);
-                $ext->addInclude($ctx_keylock,$ctx_toggle);
-                $ext->addInclude($ctx_keylock,$ctx_lock);
-                $ext->addInclude($ctx_keylock,$ctx_unlock);
-                $ext->addInclude($ctx_keylock,$ctx_setpass);
-                $ext->addInclude('from-internal-additional',$ctx_keylock);
-                */
+               }
+            */
+            // ESTAS LINEAS DEBEN ESTAR ACTIVAS PARA QUE FUNCIONE EL *56, *57, ETC
+            $ext->addInclude($ctx_keylock,$ctx_hints);
+            $ext->addInclude($ctx_keylock,$ctx_toggle);
+            $ext->addInclude($ctx_keylock,$ctx_lock);
+            $ext->addInclude($ctx_keylock,$ctx_unlock);
+            $ext->addInclude($ctx_keylock,$ctx_setpass);
+            $ext->addInclude('from-internal-additional',$ctx_keylock);
     break;
     }
 }
