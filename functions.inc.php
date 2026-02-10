@@ -164,8 +164,51 @@ function keylock_get_config($engine)
     }
 }
 
-// ... (Tus funciones de base de datos siguen igual) ...
-function keylock_get_users() { /* ... */ }
-function keylock_get_patterns() { /* ... */ }
-function keylock_set_patterns($patterns) { /* ... */ }
+function keylock_get_users()
+{
+    // Updated to use FreePBX PDO
+    try {
+        $db = FreePBX::Database();
+        $sql = "SELECT extension FROM users";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $results;
+    } catch (\Exception $e) {
+        return array();
+    }
+}
+
+function keylock_get_patterns()
+{
+    // Updated to use FreePBX PDO
+    try {
+        $db = FreePBX::Database();
+        $sql = "SELECT patterns FROM keylock_patterns WHERE id_patterns = 1 LIMIT 1";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        
+        if ($result && isset($result['patterns'])) {
+            return $result['patterns'];
+        }
+        return '';
+    } catch (\Exception $e) {
+        return '';
+    }
+}
+
+function keylock_set_patterns($patterns)
+{
+    // Updated to use FreePBX PDO with Prepared Statements (No more escaping needed)
+    try {
+        $db = FreePBX::Database();
+        $sql = "UPDATE keylock_patterns SET patterns = :patterns WHERE id_patterns = 1";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([':patterns' => $patterns]);
+        return TRUE;
+    } catch (\Exception $e) {
+        return FALSE;
+    }
+}
 ?>
