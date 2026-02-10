@@ -69,6 +69,10 @@ function keylock_get_config($engine)
     // --- CONTEXTOS DE GESTIÓN (Bloquear/Desbloquear con *) ---
     // (Estos los dejamos igual, funcionan bien en sus propios contextos)
 
+    // [CORRECCIÓN 1] Agregamos Return()
+    // Esto hace que el Macro termine correctamente y devuelva el control a 'from-internal'
+    $ext->add($macro_check, $unknown, '', new ext_return());
+
     //Locking context
     $ext->add($ctx_lock, $lock, '', new ext_answer());
     $ext->add($ctx_lock, $lock, '', new ext_set("me", '${CALLERID(num)}')); 
@@ -128,8 +132,6 @@ function keylock_get_config($engine)
     $ext->add($ctx_setpass, $setpass, '', new ext_macro($macro_setpass_name));
     $ext->add($ctx_setpass, $setpass, '', new ext_hangup());
 
-    // --- AQUÍ ESTÁ EL CAMBIO IMPORTANTE ---
-    // Recuperamos los patrones de la base de datos
     $patterns_raw = keylock_get_patterns();
     $patterns = explode("\n", $patterns_raw);
     
@@ -138,27 +140,17 @@ function keylock_get_config($engine)
         {            
             $pattern = trim($pattern);
             if (!empty($pattern))
-            {
-                // INYECCIÓN DIRECTA A 'from-internal' (Igual que Boss Secretary)
-                // Usamos _ + Patron para que Asterisk lo trate como patrón
-                // Al inyectar directamente aquí, competimos de igual a igual.
-                // Y como tu patrón (ej: _9[2-9].) es MAS ESPECIFICO que _X., ¡GANAS TÚ!
-                
+            {         
                 $ext->add('from-internal', "_".$pattern, '', new ext_macro('keylock-check'));
             }
         }
     }
 
-    // Includes básicos para que funcionen los feature codes (*57, etc)
-    // Estos SÍ se incluyen porque no compiten con rutas salientes, son códigos internos
     $ext->addInclude('from-internal-additional', $ctx_hints);
     $ext->addInclude('from-internal-additional', $ctx_toggle);
     $ext->addInclude('from-internal-additional', $ctx_lock);
     $ext->addInclude('from-internal-additional', $ctx_unlock);
     $ext->addInclude('from-internal-additional', $ctx_setpass);
-    
-    // BORRAMOS el include viejo de ext-keylock porque ya lo inyectamos arriba manualmente
-    // $ext->addInclude('from-internal-additional',$ctx_keylock); 
 
     break;
     }
