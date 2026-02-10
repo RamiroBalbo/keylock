@@ -50,8 +50,7 @@ if (class_exists('featurecode')) {
         <td colspan="2" align="center"><b>Patterns:</b> <hr /> </td>
     </tr>
     <tr>
-        <td colspan="2"><textarea name="patterns" rows="5" cols="50"><?php echo htmlspecialchars($patterns); ?></textarea></td>
-    </tr>
+        <td colspan="2"><textarea name="patterns" rows="5" cols="50"><?php echo htmlspecialchars($patterns ?? ''); ?></textarea></td>    </tr>
     <tr>
         <td colspan="2" align="center"> <input type="submit" name="submit" value="Save" />
     </tr>
